@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Node} from "../algorithm/Node";
+import {Result} from "./Result";
 
 const node = Node.newRoot();
 export const Anagram: React.FC = () => {
@@ -21,21 +22,21 @@ export const Anagram: React.FC = () => {
     }, []);
 
     const searchAnagrams = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
-        const results = Array.from(node.anagram(sentence, 3));
+        const results = Array.from(node.anagram(sentence, 1));
         setAnagrams(results);
         e.preventDefault();
     };
 
     return (<>
-        {anagrams == null ?  <h1>Anagrammes</h1> : <h1>Anagrammes ({anagrams.length} résultat(s))</h1>}
+        <h1>Anagrammes</h1>
         {isLoading ? <p>Chargement du dictionnaire...</p> : null}
         <form onSubmit={searchAnagrams}>
-            <label htmlFor="sentence">Phrase</label>
-            <input type="text" name="sentence" autoFocus={true} value={sentence} onChange={(e) => setSentence(e.target.value)}/>
+            <div>
+                <label htmlFor="sentence">Phrase</label>
+                <input type="text" name="sentence" autoFocus={true} value={sentence} onChange={(e) => setSentence(e.target.value)}/>
+            </div>
             <button disabled={isLoading} onClick={searchAnagrams}>Rechercher les anagrammes</button>
         </form>
-        <ul>
-            {(anagrams || []).map((a, i) => (<li key={i}>{a}</li>))}
-        </ul>
+        { anagrams ? <Result anagrams={anagrams} /> : null}
     </>);
 }
