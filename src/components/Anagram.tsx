@@ -1,14 +1,15 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Node} from "../algorithm/Node";
 
 const node = Node.newRoot();
 export const Anagram: React.FC = () => {
     const [anagrams, setAnagrams] = useState<string[] | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [sentence, setSentence] = useState("bon courage");
 
-    const startLoading = () => {
+    useEffect(() => {
         setIsLoading(true);
-        fetch("data/dictionary_fr.txt")
+        fetch(process.env.PUBLIC_URL + "/data/dictionary_fr.txt")
             .then(r => r.text())
             .then(body => body.split("\n"))
             .then(entries => {
@@ -17,18 +18,22 @@ export const Anagram: React.FC = () => {
                 });
                 setIsLoading(false);
             });
-    };
+    }, []);
 
-    const searchAnagrams = () => {
-        const results = Array.from(node.anagram('bon courage', 3));
+    const searchAnagrams = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
+        const results = Array.from(node.anagram(sentence, 3));
         setAnagrams(results);
+        e.preventDefault();
     };
 
     return (<>
         {anagrams == null ?  <h1>Anagrammes</h1> : <h1>Anagrammes ({anagrams.length} résultat(s))</h1>}
-        <p>Loading : {JSON.stringify(isLoading)}</p>
-        <button onClick={startLoading}>Charger le dictionnaire</button>
-        <button onClick={searchAnagrams}>Rechercher les anagrammes</button>
+        {isLoading ? <p>Chargement du dictionnaire...</p> : null}
+        <form onSubmit={searchAnagrams}>
+            <label htmlFor="sentence">Phrase</label>
+            <input type="text" name="sentence" autoFocus={true} value={sentence} onChange={(e) => setSentence(e.target.value)}/>
+            <button disabled={isLoading} onClick={searchAnagrams}>Rechercher les anagrammes</button>
+        </form>
         <ul>
             {(anagrams || []).map((a, i) => (<li key={i}>{a}</li>))}
         </ul>
