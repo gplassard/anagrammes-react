@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/anagrammes-react/static/css/main.8c8b27cf.chunk.css",
-    "main.js": "/anagrammes-react/static/js/main.94c923ee.chunk.js",
-    "main.js.map": "/anagrammes-react/static/js/main.94c923ee.chunk.js.map",
+    "main.js": "/anagrammes-react/static/js/main.3f53f445.chunk.js",
+    "main.js.map": "/anagrammes-react/static/js/main.3f53f445.chunk.js.map",
     "runtime-main.js": "/anagrammes-react/static/js/runtime-main.b8464305.js",
     "runtime-main.js.map": "/anagrammes-react/static/js/runtime-main.b8464305.js.map",
     "static/js/2.17312370.chunk.js": "/anagrammes-react/static/js/2.17312370.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.b8464305.js",
     "static/js/2.17312370.chunk.js",
     "static/css/main.8c8b27cf.chunk.css",
-    "static/js/main.94c923ee.chunk.js"
+    "static/js/main.3f53f445.chunk.js"
   ]
 }
