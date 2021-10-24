@@ -5,7 +5,6 @@ export interface Props {
 }
 export const Result: React.FC<Props> = (props) => {
     const [filterPermutations, setFilterPermutations] = useState(true);
-    const [minWordLength, setMinWordLength] = useState(3);
     const [minMaxWordLength, setMinMaxWordLength] = useState(5);
     const [contains, setContains] = useState("");
     const [startWith, setStartWith] = useState("");
@@ -16,8 +15,6 @@ export const Result: React.FC<Props> = (props) => {
         diplayedAnagrams = [...uniques];
     }
     diplayedAnagrams = diplayedAnagrams
-        .filter(sentence => sentence.split(" ").every(word => word.length >= minWordLength));
-    diplayedAnagrams = diplayedAnagrams
         .filter(sentence => sentence.split(" ").find(word => word.length >= minMaxWordLength))
     diplayedAnagrams = diplayedAnagrams
         .filter(sentence => sentence.includes(contains));
@@ -27,10 +24,6 @@ export const Result: React.FC<Props> = (props) => {
     return (<>
         <h4>{diplayedAnagrams.length} résultat(s)</h4>
         <div>
-            <div>
-                <label htmlFor="minWordLength">Taille minimale des mots</label>
-                <input type="number" id="minWordLength" value={minWordLength} onChange={(e) => setMinWordLength(parseInt(e.target.value))}/>
-            </div>
             <div>
                 <label htmlFor="minMaxWordLength">Taille minimale du mot le plus long</label>
                 <input type="number" id="minMaxWordLength" value={minMaxWordLength} onChange={(e) => setMinMaxWordLength(parseInt(e.target.value))}/>
