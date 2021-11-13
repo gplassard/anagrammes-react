@@ -7,7 +7,7 @@ export interface Props {
 }
 
 export const WordAnagram: React.FC<Props> = (props) => {
-    const [characters, setCharacters] = useState("TNIEEFACOBHJT");
+    const [characters, setCharacters] = useState("SENTTERFUELNEEMANANNITTERIZFRDAVEIOELOESUQAEULVC");
     const [useAllCharacters, setUseAllCharacters] = useState(true);
     const [anagrams, setAnagrams] = useState<string[]>([]);
     const [dictionaryMap, setDictionaryMap] = useState<Map<string, string[]>>(new Map());
