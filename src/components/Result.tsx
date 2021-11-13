@@ -2,9 +2,10 @@ import React, {useState} from "react";
 
 export interface Props {
     anagrams: string[]
+    isSentenceResults: boolean
 }
 export const Result: React.FC<Props> = (props) => {
-    const [filterPermutations, setFilterPermutations] = useState(true);
+    const [filterPermutations, setFilterPermutations] = useState(props.isSentenceResults);
     const [minMaxWordLength, setMinMaxWordLength] = useState(5);
     const [contains, setContains] = useState("");
     const [startWith, setStartWith] = useState("");
@@ -24,10 +25,10 @@ export const Result: React.FC<Props> = (props) => {
     return (<>
         <h4>{diplayedAnagrams.length} résultat(s)</h4>
         <div>
-            <div>
+            {props.isSentenceResults && <div>
                 <label htmlFor="minMaxWordLength">Taille minimale du mot le plus long</label>
                 <input type="number" id="minMaxWordLength" value={minMaxWordLength} onChange={(e) => setMinMaxWordLength(parseInt(e.target.value))}/>
-            </div>
+            </div>}
             <div>
                 <label htmlFor="contains">Contient</label>
                 <input type="text" id="contains" value={contains} onChange={(e) => setContains(e.target.value)}/>

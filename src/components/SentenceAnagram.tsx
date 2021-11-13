@@ -10,25 +10,21 @@ export interface IterationState {
     isDone: boolean
 }
 
-export const Anagram: React.FC = () => {
+export interface Props {
+    dictionary: string[]
+}
+
+export const SentenceAnagram: React.FC<Props> = (props) => {
     const MAX_RESULTS = 5_000;
-    const [anagrams, setAnagrams] = useState<IterationState | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
     const [sentence, setSentence] = useState("bon courage");
     const [minWordLength, setMinWordLength] = useState(3);
+    const [anagrams, setAnagrams] = useState<IterationState | null>(null);
 
     useEffect(() => {
-        setIsLoading(true);
-        fetch(process.env.PUBLIC_URL + "/data/dictionary_fr.txt")
-            .then(r => r.text())
-            .then(body => body.split("\n"))
-            .then(entries => {
-                entries.forEach(entry => {
-                    node.add(entry.replaceAll("\r", ""))
-                });
-                setIsLoading(false);
-            });
-    }, []);
+        props.dictionary.forEach(word => {
+            node.add(word);
+        })
+    }, [props.dictionary]);
 
     const searchAnagrams = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
         let iterable = node.anagram(sentence, minWordLength);
@@ -65,8 +61,7 @@ export const Anagram: React.FC = () => {
     }
 
     return (<>
-        <h1>Anagrammes</h1>
-        {isLoading ? <p>Chargement du dictionnaire...</p> : null}
+        <h1>Anagrammes de phrases</h1>
         <form onSubmit={searchAnagrams}>
             <div>
                 <label htmlFor="sentence">Phrase</label>
@@ -76,12 +71,12 @@ export const Anagram: React.FC = () => {
                 <label htmlFor="minWordLength">Taille minimale des mots</label>
                 <input type="number" id="minWordLength" value={minWordLength} onChange={(e) => setMinWordLength(parseInt(e.target.value))}/>
             </div>
-            <button disabled={isLoading} onClick={searchAnagrams}>Rechercher les anagrammes</button>
+            <button onClick={searchAnagrams}>Rechercher les anagrammes</button>
         </form>
         { anagrams && !anagrams.isDone ? (<>
             Il y a plus de {MAX_RESULTS} résultats
             <button onClick={() => searchNextAnagrams(anagrams)}>charger les résultats suivants</button></>
         ) : null}
-        { anagrams ? <Result anagrams={anagrams.elements} /> : null}
+        { anagrams ? <Result anagrams={anagrams.elements} isSentenceResults={true} /> : null}
     </>);
 }
