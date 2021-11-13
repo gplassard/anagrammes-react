@@ -2,8 +2,6 @@ import React, {useEffect, useState} from "react";
 import {Node} from "../algorithm/Node";
 import {Result} from "./Result";
 
-const node = Node.newRoot();
-
 export interface IterationState {
     generator: Generator<string>
     elements: string[]
@@ -19,12 +17,13 @@ export const SentenceAnagram: React.FC<Props> = (props) => {
     const [sentence, setSentence] = useState("bon courage");
     const [minWordLength, setMinWordLength] = useState(3);
     const [anagrams, setAnagrams] = useState<IterationState | null>(null);
+    const [node] = useState(() => Node.newRoot());
 
     useEffect(() => {
         props.dictionary.forEach(word => {
             node.add(word);
         })
-    }, [props.dictionary]);
+    }, [props.dictionary, node]);
 
     const searchAnagrams = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
         let iterable = node.anagram(sentence, minWordLength);

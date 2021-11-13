@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import {SentenceAnagram} from "./components/SentenceAnagram";
-import {Link, Route, Switch, BrowserRouter as Router} from "react-router-dom";
+import {Link, Route, Switch, HashRouter} from "react-router-dom";
 import {WordAnagram} from "./components/WordAnagram";
 
 const baseName = document.querySelector('base')?.getAttribute('href') || undefined;
@@ -21,7 +21,7 @@ function App() {
             });
     }, []);
     return (
-        <Router basename={baseName}>
+        <HashRouter basename={baseName}>
             <nav className="container">
                 <div>
                     <Link to="/">Anagrammes de phrase</Link>
@@ -38,7 +38,7 @@ function App() {
                     </Route>
                 </Switch>
             </div>}
-        </Router>
+        </HashRouter>
     );
 }
 
